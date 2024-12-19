@@ -43,6 +43,7 @@ public class SecurityConfig {
         http.anyRequest().authenticated();
         // http.anyRequest().denyAll();
       })
+      // Poner aqui un 404
       .formLogin(Customizer.withDefaults()) // El mismo SpringSecurity crear una ventana de login
       .httpBasic(Customizer.withDefaults()); // httpBasic es una de las tantas formas de autenticarse, ver Postman
 

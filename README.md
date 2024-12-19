@@ -10,3 +10,7 @@ Vamos a usar vistas pre cargadas
 ## Resultados
 
 ![alt text](image.png)
+
+## Pendientes
+
+- Usar las validaciones
