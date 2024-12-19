@@ -34,7 +34,8 @@ public class SecurityConfig {
 
     httpSecurity
       .csrf(csrf -> csrf.disable())
-      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+      // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Esta linea significa que nunca se creará una session y que siempre se hará redirección al index
+      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
       .authorizeHttpRequests(http -> {
         // Aplicaremos aqui una serie de filtros
         http.requestMatchers(HttpMethod.GET, "/", "/auth/public").permitAll();
@@ -42,7 +43,8 @@ public class SecurityConfig {
         http.anyRequest().authenticated();
         // http.anyRequest().denyAll();
       })
-      .httpBasic(Customizer.withDefaults());
+      .formLogin(Customizer.withDefaults()) // El mismo SpringSecurity crear una ventana de login
+      .httpBasic(Customizer.withDefaults()); // httpBasic es una de las tantas formas de autenticarse, ver Postman
 
       
 
