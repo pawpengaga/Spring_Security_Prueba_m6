@@ -2,12 +2,15 @@ package com.pawpengaga.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +29,26 @@ public class SecurityConfig {
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
+    /* ************************************************************************************ */
+    // Ahora vamos a aplicar seguridad
+
+    httpSecurity
+      .csrf(csrf -> csrf.disable())
+      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+      .authorizeHttpRequests(http -> {
+        // Aplicaremos aqui una serie de filtros
+        http.requestMatchers(HttpMethod.GET, "/", "/auth/public").permitAll();
+        http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAuthority("CREATE");
+        http.anyRequest().authenticated();
+        // http.anyRequest().denyAll();
+      })
+      .httpBasic(Customizer.withDefaults());
+
+      
+
+
+    /* ************************************************************************************ */
+
     return httpSecurity.build();
 
   }
@@ -41,8 +64,8 @@ public class SecurityConfig {
   AuthenticationProvider authenticationProvider(){
 
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-    authenticationProvider.setPasswordEncoder(null);
-    authenticationProvider.setUserDetailsService(null);
+    authenticationProvider.setPasswordEncoder(passwordEncoder());
+    authenticationProvider.setUserDetailsService(userDetailsService());
     return authenticationProvider;
 
   }
