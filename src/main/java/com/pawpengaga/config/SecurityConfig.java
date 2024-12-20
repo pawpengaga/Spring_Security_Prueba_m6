@@ -1,5 +1,7 @@
 package com.pawpengaga.config;
 
+import javax.swing.text.html.HTML;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -42,7 +44,10 @@ public class SecurityConfig {
       .authorizeHttpRequests(http -> {
         // Aplicaremos aqui una serie de filtros
         http.requestMatchers(HttpMethod.GET, "/", "/auth/public").permitAll();
-        http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAuthority("CREATE");
+        // http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyRole("USER", "ADMIN", "DEVELOPER");
+        http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyAuthority("UPDATE");
+        // http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyAuthority("DELETE");
+        http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyRole("DEVELOPER");
         http.anyRequest().authenticated();
         // http.anyRequest().denyAll();
       })

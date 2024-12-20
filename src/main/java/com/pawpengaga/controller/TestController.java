@@ -17,9 +17,16 @@ public class TestController {
     return "publico";
   }
 
+  @GetMapping("/config")
+  public String config(){
+    return "config";
+  }
+
   @GetMapping("/privado")
   public String holaPrivado(){
     return "privado";
   }
+
+
 
 }
