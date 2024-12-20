@@ -44,10 +44,10 @@ public class SecurityConfig {
       .authorizeHttpRequests(http -> {
         // Aplicaremos aqui una serie de filtros
         http.requestMatchers(HttpMethod.GET, "/", "/auth/public").permitAll();
-        // http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyRole("USER", "ADMIN", "DEVELOPER");
-        http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyAuthority("UPDATE");
+        http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyRole("ADMIN", "DEVELOPER", "USER");
+        // http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyAuthority("UPDATE");
         // http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyAuthority("DELETE");
-        http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyRole("DEVELOPER");
+        http.requestMatchers(HttpMethod.GET, "auth/config").hasRole("DEVELOPER");
         http.anyRequest().authenticated();
         // http.anyRequest().denyAll();
       })
