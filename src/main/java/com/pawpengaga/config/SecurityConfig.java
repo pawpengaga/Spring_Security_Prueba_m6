@@ -13,13 +13,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.pawpengaga.service.UserDetailsServiceImpl;
@@ -49,8 +44,10 @@ public class SecurityConfig {
         // http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyAuthority("DELETE");
         http.requestMatchers(HttpMethod.GET, "auth/config").hasRole("DEVELOPER");
         http.anyRequest().authenticated();
+
         // http.anyRequest().denyAll();
       })
+      .exceptionHandling((exceptionHandling) -> exceptionHandling.accessDeniedPage("/401"))
       // Poner aqui un 404
       .formLogin(Customizer.withDefaults()) // El mismo SpringSecurity crear una ventana de login
       .httpBasic(Customizer.withDefaults()); // httpBasic es una de las tantas formas de autenticarse, ver Postman
