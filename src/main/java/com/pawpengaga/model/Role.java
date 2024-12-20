@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,9 +34,8 @@ public class Role {
 
   private RoleEnum role;
 
-  @ManyToAny(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinTable(name = "role_permisos", joinColumns = @JoinColumn(name="role_id"), inverseJoinColumns = @JoinColumn(name = "permisos_id"))
-  private Set<Role> roles = new HashSet<>();
   private Set<Permiso> permisos = new HashSet<>(); 
 
 }

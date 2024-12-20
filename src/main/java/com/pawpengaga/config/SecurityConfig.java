@@ -14,10 +14,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.pawpengaga.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -64,32 +67,34 @@ public class SecurityConfig {
 
   // Nuestro proveedor, aún vacío, el paso 4 de la infografía
   @Bean
-  AuthenticationProvider authenticationProvider(){
+  AuthenticationProvider authenticationProvider(UserDetailsServiceImpl userDetailService){
 
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
     authenticationProvider.setPasswordEncoder(passwordEncoder());
-    authenticationProvider.setUserDetailsService(userDetailsService());
+    authenticationProvider.setUserDetailsService(userDetailService);
     return authenticationProvider;
 
   }
 
   // El paso 5A de la infografía
-  @SuppressWarnings("deprecation")
+  // @SuppressWarnings("deprecation")
   @Bean
   PasswordEncoder passwordEncoder(){
-    return NoOpPasswordEncoder.getInstance(); // Un metodo obsoleto con fines de prueba
+    
+    // return NoOpPasswordEncoder.getInstance(); // Un metodo obsoleto con fines de prueba
+    return new BCryptPasswordEncoder();
   }
   
   // El paso 5B de la infografía
   // Trabamos al parecer con un usuario en memoria
-  @Bean
-  UserDetailsService userDetailsService(){
-    UserDetails upUserDetails = User.withUsername("Admin")
-                                    .password("12345678")
-                                    .roles("ADMIN")
-                                    .authorities("READ", "CREATE")
-                                    .build();
-    return new InMemoryUserDetailsManager(upUserDetails);
-  }
+  // @Bean
+  // UserDetailsService userDetailsService(){
+  //   UserDetails upUserDetails = User.withUsername("Admin")
+  //                                   .password("12345678")
+  //                                   .roles("ADMIN")
+  //                                   .authorities("READ", "CREATE")
+  //                                   .build();
+  //   return new InMemoryUserDetailsManager(upUserDetails);
+  // }
 
 }
