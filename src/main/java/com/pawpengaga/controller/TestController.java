@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RequestMapping("/auth")
+@RequestMapping("/myauth")
 public class TestController {
 
   // Existe un concepto aplicado a cada controlador llamado Pre Autorizar, es una alternativa poco practica al controlador
