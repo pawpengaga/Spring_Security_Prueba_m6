@@ -1,19 +1,19 @@
 package com.pawpengaga;
 
-import java.util.List;
-import java.util.Set;
+// import java.util.List;
+// import java.util.Set;
 
-import org.springframework.boot.CommandLineRunner;
+// import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.pawpengaga.model.Permiso;
-import com.pawpengaga.model.Role;
-import com.pawpengaga.model.RoleEnum;
-import com.pawpengaga.model.Usuario;
-import com.pawpengaga.repository.UsuarioRepository;
+// import com.pawpengaga.model.Permiso;
+// import com.pawpengaga.model.Role;
+// import com.pawpengaga.model.RoleEnum;
+// import com.pawpengaga.model.Usuario;
+// import com.pawpengaga.repository.UsuarioRepository;
 
 @SpringBootApplication
 public class SpringSecurityPruebaApplication {
@@ -22,6 +22,8 @@ public class SpringSecurityPruebaApplication {
 		SpringApplication.run(SpringSecurityPruebaApplication.class, args);
 	}
 
+	/*
+	
 	@Bean
 	CommandLineRunner init(UsuarioRepository userRepo) {
 		// Vamos a poblar los datos
@@ -59,8 +61,8 @@ public class SpringSecurityPruebaApplication {
 									 .build();
 
 
-			/* VAMOS A CREAR LOS USUARIOS */
-			/* (Esto es lo que va a la base de datos) */
+			// VAMOS A CREAR LOS USUARIOS 
+			// (Esto es lo que va a la base de datos) 
 
 			Usuario admi = Usuario.builder()
 				.name("Erick Rivera")
@@ -96,12 +98,14 @@ public class SpringSecurityPruebaApplication {
 				.build();
 
 			
-				/* FINALMENTE GRABAMOS */
+				// FINALMENTE GRABAMOS
 				userRepo.saveAll(List.of(admi, ana, mari));
 				// Podemos usar el metodo saveAll de Hibernate
 			
 
 		};
 	}
+
+	*/
 
 }
