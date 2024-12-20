@@ -32,8 +32,8 @@
     <section class="mt-5">
 
       <h3 class="diplay-4 mb-5">Inicio de sesion</h3>
-      
-      <form action="@{/auth/login}" method="POST">
+
+      <form th:action="@{/auth/login}" method="POST">
         <div class="d-flex flex-column gap-5" style="width: 50%;">
           <div class="form-group">
             <label class="form-label" for="correo" id="correo">Correo electrónico</label>
@@ -48,7 +48,6 @@
        </form>
 
     </section>
-
 
    </main>
   <div th:if="${error != null}" th:class="me-4 mb-4 alert alert-dismissible alert-warning" role="alert" style="position: absolute; bottom: 0; right: 0; min-width: 400px;">

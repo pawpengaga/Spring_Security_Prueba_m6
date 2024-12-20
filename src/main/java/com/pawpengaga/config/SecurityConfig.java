@@ -38,22 +38,25 @@ public class SecurityConfig {
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
       .authorizeHttpRequests(http -> {
         // Aplicaremos aqui una serie de filtros
-        http.requestMatchers(HttpMethod.GET, "/", "/myauth/public", "/auth/login", "/401").permitAll();
-        http.requestMatchers(HttpMethod.GET, "/myauth/privado").hasAnyRole("ADMIN", "DEVELOPER", "USER");
+        http.requestMatchers(HttpMethod.GET, "/","/myauth/public","/401","/auth/login").permitAll();
+        http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyRole("ADMIN", "DEVELOPER", "USER");
         // http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyAuthority("UPDATE");
         // http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyAuthority("DELETE");
-        http.requestMatchers(HttpMethod.GET, "myauth/config").hasRole("DEVELOPER");
+        http.requestMatchers(HttpMethod.GET, "/auth/config").hasRole("DEVELOPER");
         http.anyRequest().authenticated();
 
         // http.anyRequest().denyAll();
       })
-      .exceptionHandling((exceptionHandling) -> exceptionHandling.accessDeniedPage("/401"))
-      // Poner aqui un 404
       .formLogin(formlogin -> formlogin
         .usernameParameter("correo")
         .passwordParameter("clave")
         .loginPage("/auth/login")
-        .loginProcessingUrl("auth/login")) // El mismo SpringSecurity crear una ventana de login
+        .loginProcessingUrl("/auth/login")
+      ) // El mismo SpringSecurity crear una ventana de login
+
+      .exceptionHandling((exceptionHandling) -> exceptionHandling.accessDeniedPage("/401"))
+      // Poner aqui un 404
+
       .httpBasic(Customizer.withDefaults()); // httpBasic es una de las tantas formas de autenticarse, ver Postman
 
       

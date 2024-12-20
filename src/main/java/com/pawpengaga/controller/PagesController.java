@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class PagesController {
 
+  @GetMapping
+  public String root(){
+    return "login";
+  }
+
   @GetMapping("/404")
   public String cuatroCeroCuatro(){
     return "404";

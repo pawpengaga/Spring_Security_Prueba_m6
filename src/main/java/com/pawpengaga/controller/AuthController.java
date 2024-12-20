@@ -49,11 +49,9 @@ public class AuthController {
 
     // El usuario puede tener mas de un rol, los guardamos todos aqui
     // El rol es una clase que contiene las authorities
-    List<String> roles = userDetails
-      .getAuthorities()
+    List<String> roles = userDetails.getAuthorities()
       .stream()
-      .map(GrantedAuthority::getAuthority)
-      .toList();
+      .map(GrantedAuthority::getAuthority).toList();
 
     // Generamos una validacion
     AuthResponse authResponse = new AuthResponse(userDetails.getUsername(), roles);
