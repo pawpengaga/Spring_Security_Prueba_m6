@@ -10,17 +10,17 @@ public class PagesController {
 
   @GetMapping
   public String root(){
-    return "login";
+    return "index";
   }
 
   @GetMapping("404")
   public String cuatroCeroCuatro(){
-    return "404";
+    return "pages/404";
   }
 
   @GetMapping("401")
   public String cuatroCeroUno(){
-    return "401";
+    return "pages/401";
   }
 
   /* PAGINAS /pages */
@@ -29,17 +29,17 @@ public class PagesController {
 
     @GetMapping("pages/public")
     public String hola(){
-      return "publico";
+      return "pages/publico";
     }
   
     @GetMapping("pages/config")
     public String config(){
-      return "config";
+      return "pages/config";
     }
   
     @GetMapping("pages/privado")
     public String holaPrivado(){
-      return "privado";
+      return "pages/privado";
     }
 
 }

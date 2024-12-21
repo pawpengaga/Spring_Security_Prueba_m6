@@ -10,7 +10,7 @@
   <section>
     <nav class="navbar navbar-expand-lg bg-dark">
       <div class="container-fluid px-5">
-        <a class="navbar-brand text-white" href="#">Inventario</a>
+        <a class="navbar-brand text-white" th:href="@{/}">Spring Security</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,18 +20,23 @@
               <a class="nav-link text-white" th:href="@{/}">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" th:href="@{/login}">Login</a>
+              <a class="nav-link text-white" th:href="@{/pages/public}">Público</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" th:href="@{/pages/privado}">Privado</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" th:href="@{/pages/config}">Configuración</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
   </section>
-  <main class="container">   
 
-    <section class="mt-5">
+  <section class="container mt-5">   
 
-      <h3 class="diplay-4 mb-5">Inicio de sesion</h3>
+      <h3 class="diplay-4 mb-5">Inicio de sesión</h3>
 
       <form th:action="@{/auth/login}" method="POST">
         <div class="d-flex flex-column gap-5" style="width: 50%;">
@@ -43,13 +48,11 @@
             <label class="form-label" for="clave" id="clave">Contraseña</label>
             <input type="text" class="form-control" id="clave" name="clave" required />
           </div>
-          <button class="btn btn-primary">Entrar</button>
+          <button class="btn btn-primary" style="width: fit-content;">Iniciar sesión</button>
         </div>
        </form>
 
-    </section>
-
-   </main>
+   </section>
   <div th:if="${error != null}" th:class="me-4 mb-4 alert alert-dismissible alert-warning" role="alert" style="position: absolute; bottom: 0; right: 0; min-width: 400px;">
     <div th:text="${error}"></div>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

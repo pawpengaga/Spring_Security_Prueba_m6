@@ -37,15 +37,21 @@ public class SecurityConfig {
       // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Esta linea significa que nunca se creará una session y que siempre se hará redirección al index
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
       .authorizeHttpRequests(http -> {
-        // Aplicaremos aqui una serie de filtros
+
+        /* Aplicaremos aqui una serie de filtros */
+
         http.requestMatchers(HttpMethod.GET, "/","/pages/public","/401","/auth/login").permitAll();
         http.requestMatchers(HttpMethod.GET, "/pages/privado").hasAnyRole("ADMIN", "DEVELOPER", "USER");
-        // http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyAuthority("UPDATE");
-        // http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyAuthority("DELETE");
+        
+        // http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyAuthority("UPDATE"); // X
+        // http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyAuthority("DELETE"); // X
+        
         http.requestMatchers(HttpMethod.GET, "/pages/config").hasRole("DEVELOPER");
+
         http.anyRequest().authenticated();
 
         // http.anyRequest().denyAll();
+        
       })
       .formLogin(formlogin -> formlogin
         .usernameParameter("correo")
