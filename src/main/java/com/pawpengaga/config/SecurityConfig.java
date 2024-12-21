@@ -38,11 +38,11 @@ public class SecurityConfig {
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
       .authorizeHttpRequests(http -> {
         // Aplicaremos aqui una serie de filtros
-        http.requestMatchers(HttpMethod.GET, "/","/myauth/public","/401","/auth/login").permitAll();
-        http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyRole("ADMIN", "DEVELOPER", "USER");
+        http.requestMatchers(HttpMethod.GET, "/","/pages/public","/401","/auth/login").permitAll();
+        http.requestMatchers(HttpMethod.GET, "/pages/privado").hasAnyRole("ADMIN", "DEVELOPER", "USER");
         // http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyAuthority("UPDATE");
         // http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyAuthority("DELETE");
-        http.requestMatchers(HttpMethod.GET, "/auth/config").hasRole("DEVELOPER");
+        http.requestMatchers(HttpMethod.GET, "/pages/config").hasRole("DEVELOPER");
         http.anyRequest().authenticated();
 
         // http.anyRequest().denyAll();
