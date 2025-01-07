@@ -35,6 +35,8 @@ Se puede ver todo tipo de documentación al respecto [aquí](https://github.com/
 - Construir el payload
 - Construir la clave secreta
 
+- Vamos a usar DTO (Data To Object)
+
 ### Observaciones
 
 - Se pueden declarar todo tipo de variables en `application.properties`
