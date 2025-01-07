@@ -28,6 +28,8 @@ Vamos a usar vistas pre cargadas
 
 ## La JWT UPDATE está aqui
 
+Se puede ver todo tipo de documentación al respecto [aquí](https://github.com/auth0/java-jwt)
+
 #### Cosas que tener en cuenta
 
 - Construir el payload

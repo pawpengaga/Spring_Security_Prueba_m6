@@ -1,6 +1,8 @@
 package com.pawpengaga.utils;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -10,7 +12,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class JWUtils {
 
@@ -45,6 +51,45 @@ public class JWUtils {
     
     return jwtToken;
 
+  }
+
+  // Vamos a validar el token!
+  public DecodedJWT validateToken(String token){
+    try {
+      
+      // Usamos el mismo algoritmo de codificación
+      Algorithm algorithm = Algorithm.HMAC256(privatekey);
+
+      // Construimos un verificador al que le pasamos tanto el algoritmo con el usuario
+      JWTVerifier verifier = JWT.require(algorithm)
+        .withIssuer(userGenerator)
+        .build();
+
+      // Usamos ese verificador para decodificar
+      DecodedJWT decoded = verifier.verify(token);
+
+      return decoded;
+
+    } catch (JWTVerificationException e) {
+      throw new JWTVerificationException("Token inválido: Solicitudes no autorizadas.");
+    }
+  }
+
+  /* ********************************* METODOS UTILES ********************************* */
+
+  // Obtener el nombre de usuarios
+  public String extractUserName(DecodedJWT decoded){
+    return decoded.getSubject().toLowerCase();
+  }
+
+  // Obtener un claim especifico del payload
+  public Claim getSpecifiedClaim(DecodedJWT decoded, String claimName){
+    return decoded.getClaim(claimName);
+  }
+
+  // Un metodo que nos devuelva todos los claims
+  public Map<String, Claim> getAllClaims(DecodedJWT decoded){
+    return decoded.getClaims();
   }
 
 }
