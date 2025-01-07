@@ -23,3 +23,16 @@ Vamos a usar vistas pre cargadas
 ## Flujo general de Spring Security
 
 ![alt text](pictures/image-1.png)
+
+---
+
+## La JWT UPDATE está aqui
+
+#### Cosas que tener en cuenta
+
+- Construir el payload
+- Construir la clave secreta
+
+### Observaciones
+
+- Se pueden declarar todo tipo de variables en `application.properties`
