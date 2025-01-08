@@ -3,6 +3,8 @@ package com.pawpengaga.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,18 +17,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.pawpengaga.dto.AuthLoginRequest;
 import com.pawpengaga.model.AuthResponse;
 import com.pawpengaga.model.LoginRequest;
+import com.pawpengaga.service.UserDetailsServiceImpl;
 
 import jakarta.validation.Valid;
 
-@Controller
+// @
+@RestController
 @RequestMapping("/auth")
 public class AuthController {
 
   @Autowired
   AuthenticationManager authenticationManager;
+
+  @Autowired
+  UserDetailsServiceImpl userDetailsServiceImpl;
 
   @GetMapping("/login")
   public String login(){
@@ -60,5 +69,15 @@ public class AuthController {
     return authResponse;
 
   }
+  
+  /* ********************************************* JWT UDPATE ********************************************* */
+
+  @PostMapping("/log-in")
+  public ResponseEntity<com.pawpengaga.dto.AuthResponse> restLogin(@RequestBody @Valid AuthLoginRequest userRequest){
+
+    return new ResponseEntity<>(userDetailsServiceImpl.loginUser(userRequest), HttpStatus.OK);
+    
+  }
+  
 
 }
