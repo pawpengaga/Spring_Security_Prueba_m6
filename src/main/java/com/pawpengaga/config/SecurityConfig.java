@@ -2,6 +2,7 @@ package com.pawpengaga.config;
 
 import javax.swing.text.html.HTML;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,12 +17,18 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.pawpengaga.config.filter.JwtTokenValidator;
 import com.pawpengaga.service.UserDetailsServiceImpl;
+import com.pawpengaga.utils.JWUtils;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+  @Autowired
+  JWUtils jwtUtils;
 
   // El primer paso es crear la securityFilterChain
   // Esta clase es un bean regular
@@ -40,13 +47,16 @@ public class SecurityConfig {
 
         /* Aplicaremos aqui una serie de filtros */
 
-        http.requestMatchers(HttpMethod.GET, "/","/pages/public","/401","/auth/login").permitAll();
+        http.requestMatchers(HttpMethod.GET, "/","/pages/public","/401","/auth/login", "/auth/log-in").permitAll();
+        http.requestMatchers(HttpMethod.POST, "/auth/log-in").permitAll();
         http.requestMatchers(HttpMethod.GET, "/pages/privado").hasAnyRole("ADMIN", "DEVELOPER", "USER");
+        http.requestMatchers(HttpMethod.GET, "/pages/privado").hasAnyAuthority("ROLE_USER");
+        http.requestMatchers(HttpMethod.GET, "/pages/config").hasRole("DEVELOPER");
+        http.requestMatchers(HttpMethod.GET, "/pages/config").hasAnyAuthority("ROLE_USER");
         
         // http.requestMatchers(HttpMethod.GET, "/auth/privado").hasAnyAuthority("UPDATE"); // X
         // http.requestMatchers(HttpMethod.GET, "auth/config").hasAnyAuthority("DELETE"); // X
         
-        http.requestMatchers(HttpMethod.GET, "/pages/config").hasRole("DEVELOPER");
 
         http.anyRequest().authenticated();
 
@@ -63,7 +73,9 @@ public class SecurityConfig {
       .exceptionHandling((exceptionHandling) -> exceptionHandling.accessDeniedPage("/401"))
       // Poner aqui un 404
 
-      .httpBasic(Customizer.withDefaults()); // httpBasic es una de las tantas formas de autenticarse, ver Postman
+      .httpBasic(Customizer.withDefaults()) // httpBasic es una de las tantas formas de autenticarse, ver Postman
+
+      .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class);
 
       
 

@@ -27,7 +27,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
   private JWUtils jwtUtils;
 
-  private JwtTokenValidator(JWUtils jwtUtils){
+  public JwtTokenValidator(JWUtils jwtUtils){
     this.jwtUtils = jwtUtils;
   }
   
