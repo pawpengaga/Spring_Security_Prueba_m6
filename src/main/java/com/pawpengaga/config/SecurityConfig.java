@@ -77,9 +77,6 @@ public class SecurityConfig {
 
       .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class);
 
-      
-
-
     /* ************************************************************************************ */
 
     return httpSecurity.build();

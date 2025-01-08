@@ -34,9 +34,26 @@ Se puede ver todo tipo de documentación al respecto [aquí](https://github.com/
 
 - Construir el payload
 - Construir la clave secreta
-
-- Vamos a usar DTO (Data To Object)
+- Generar las utilidad de JWT, anotada como `@Component`
+- Usamos el algoritmo `HMAC256`
+- Generamos los datos para usar en el token
+  - El Algoritmo
+  - El usuario
+  - Las `Authorities`
+  - La información de rigor
+  - La firma con el Algoritmo
+- Lo validamos usando el Algoritmo
+- Se genera un validor que toma el token desde el Header `Authorization`
+- Si lo validado es correcto se graba en el `SecurityContextHolder`
+- Existen 2 validaciones
+  - La validación de autenticación: Que las credenciales de inicio de sesión sean correctas
+  - La validación de sesión: Que el token sea válido
+- Usamos DTO (Data To Object)
+- Se trabaja en AuthController, ahora con un token de por medio
+- Se utiliza por fin el filtro creado en la cadena de filtros con la forma `.addFilterBefore()`
 
 ### Observaciones
 
 - Se pueden declarar todo tipo de variables en `application.properties`
+- Usamos JWT como un filtro más dentro de la **Cadena de Filtros**
+- Existen más maneras y contextos donde usar JWT, pero son más complejos
